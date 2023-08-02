@@ -1,0 +1,22 @@
+{
+  "name": "Goose Extension",
+  "version": "1.0",
+  "description": "Goose Extension",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["src/background/background.js"],
+    "persistent": false
+  },
+  "options_page": "src/options/options.html",
+  "browser_action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": "src/assets/logo.ico"
+  },
+  "icons": {
+    "16": "src/assets/logo.ico"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ]
+}
