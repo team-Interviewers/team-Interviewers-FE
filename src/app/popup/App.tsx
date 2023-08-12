@@ -6,7 +6,7 @@ function App() {
       <Wrapper>
         <div>질문을 입력해주세요</div>
         <Input></Input>
-        <button>제출</button>
+        <button className="triggerButton">제출</button>
       </Wrapper>
     </div>
   );

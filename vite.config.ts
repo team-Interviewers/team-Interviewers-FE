@@ -9,16 +9,23 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        popup: resolve(__dirname, 'src', 'popup', 'popup.html'),
-        options: resolve(__dirname, 'src', 'options', 'options.html'),
-        background: resolve(__dirname, 'src', 'background', 'background.html'),
+        background: resolve(
+          __dirname,
+          'src',
+          'app',
+          'background',
+          'background.html'
+        ),
+        popup: resolve(__dirname, 'src', 'app', 'popup', 'popup.html'),
+        options: resolve(__dirname, 'src', 'app', 'options', 'options.html'),
+        contentScript: resolve(__dirname, 'src', 'app', 'contentScript.ts'),
       },
       output: {
         dir: 'dist',
         format: 'es',
         sourcemap: false,
-        entryFileNames: 'src/[name]/[name].js',
-        assetFileNames: 'src/assets/[name][extname]'
+        entryFileNames: 'src/app/[name]/[name].js',
+        assetFileNames: 'src/app/assets/[name][extname]',
       },
     },
   },

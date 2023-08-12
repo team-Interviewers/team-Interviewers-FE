@@ -1,22 +1,22 @@
 {
-  "name": "Goose Extension",
+  "name": "randomInterview",
   "version": "1.0",
-  "description": "Goose Extension",
+  "description": "random Interview Depence",
   "manifest_version": 2,
   "background": {
-    "scripts": ["src/background/background.js"],
+    "scripts": ["src/app/background/background.js"],
     "persistent": false
   },
-  "options_page": "src/options/options.html",
+  "options_page": "src/app/options/options.html",
   "browser_action": {
-    "default_popup": "src/popup/popup.html",
-    "default_icon": "src/assets/logo.ico"
+    "default_popup": "src/app/popup/popup.html"
   },
-  "icons": {
-    "16": "src/assets/logo.ico"
-  },
-  "permissions": [
-    "activeTab",
-    "storage"
+  "permissions": ["activeTab", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/app/contentScript/contentScript.js"],
+      "run_at": "document_idle"
+    }
   ]
 }
