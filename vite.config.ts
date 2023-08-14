@@ -18,7 +18,13 @@ export default defineConfig({
         ),
         popup: resolve(__dirname, 'src', 'app', 'popup', 'popup.html'),
         options: resolve(__dirname, 'src', 'app', 'options', 'options.html'),
-        contentScript: resolve(__dirname, 'src', 'app', 'contentScript.ts'),
+        contentScript: resolve(
+          __dirname,
+          'src',
+          'app',
+          'contentScript',
+          'contentScript.ts'
+        ),
       },
       output: {
         dir: 'dist',
