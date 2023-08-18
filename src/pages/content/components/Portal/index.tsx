@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import Portal from '@root/src/pages/content/components/Modal/Portal';
+import Portal from '@root/src/pages/content/components/Portal/Portal';
 import refreshOnUpdate from 'virtual:reload-on-update-in-view';
 import { attachTwindStyle } from '@src/shared/style/twind';
 
