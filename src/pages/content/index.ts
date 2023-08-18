@@ -1,3 +1,1 @@
-console.log('content loaded');
-
-import('./components/Modal');
+import('./components/Portal');
