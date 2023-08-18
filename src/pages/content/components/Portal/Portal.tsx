@@ -1,11 +1,19 @@
-import { useState } from 'react';
 import { useClickSpy } from '../../event';
+import { useModal } from '../../hooks/useModal';
+import { Question } from '../Question';
 
 export default function Portal() {
-  const [showModal, setShowModal] = useState(false);
-  const handleClick = () => setShowModal((prevShow) => !prevShow);
+  const { Modal, isOpen, openModal, closeModal } = useModal();
 
-  useClickSpy(handleClick);
+  useClickSpy(isOpen ? closeModal : openModal);
 
-  return <div className="text-lime-400">{showModal && <div>Modal!</div>}</div>;
+  return (
+    <>
+      {isOpen && (
+        <Modal isOpen={isOpen} closeModal={closeModal}>
+          <Question>{'문제입니다.'}</Question>
+        </Modal>
+      )}
+    </>
+  );
 }
