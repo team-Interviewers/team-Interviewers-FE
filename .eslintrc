@@ -25,10 +25,23 @@
     }
   },
   "rules": {
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   },
   "globals": {
     "chrome": "readonly"
   },
-  "ignorePatterns": ["watch.js", "dist/**"]
+  "ignorePatterns": ["watch.js", "dist/**"],
+  "prettier/prettier": [
+    "error",
+    {
+      "singleQuote": true,
+      "endOfLine": "auto"
+    }
+  ]
 }
