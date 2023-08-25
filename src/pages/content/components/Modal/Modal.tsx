@@ -1,11 +1,11 @@
-import { styled } from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
+import { styled } from 'styled-components';
 import { DEFAULT_VARIANTS } from '../../constants';
 import { ModalProps } from '../../types';
 
 export const Modal = ({ children, isOpen, closeModal }: ModalProps) => {
   const closeHandler = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation();
+    if (e.target !== e.currentTarget) return;
     closeModal();
   };
 
@@ -33,12 +33,11 @@ const Overlay = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  top: 0px;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.6);
 `;
