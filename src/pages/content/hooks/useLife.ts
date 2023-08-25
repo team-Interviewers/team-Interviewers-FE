@@ -8,15 +8,12 @@ interface UseLifeReturn {
 
 /**
  * 사용자의 라이프를 관리하는 커스텀 훅
+ * @param _lifeCount 라이프 개수
  * @example
- * const { lifeCount, reset, decrement } = useLife();
+ * const { lifeCount, reset, decrement } = useLife(3);
  */
 
-interface LifeProps {
-  lifeCount?: number;
-}
-
-const useLife = ({ lifeCount: _lifeCount = 3 }: LifeProps): UseLifeReturn => {
+const useLife = (_lifeCount = 3): UseLifeReturn => {
   const [lifeCount, setLifeCount] = useState(_lifeCount);
 
   const reset = () => setLifeCount(_lifeCount);
