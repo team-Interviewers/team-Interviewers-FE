@@ -1,11 +1,11 @@
 import { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
-import { ColorType } from '../utils/theme';
+import { ButtonColorType, ColorType } from '../utils/theme';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  buttonColor?: ColorType;
-  activeButtonColor?: ColorType;
-  disabledButtonColor?: ColorType;
+  buttonColor?: ButtonColorType;
+  activeButtonColor?: ButtonColorType;
+  disabledButtonColor?: ButtonColorType;
   width?: number;
   height?: number;
   fontSize?: number;
@@ -30,7 +30,7 @@ const StyledButton = styled.button<ButtonProps>`
   border: 0 solid transparent;
   border-radius: 0.5rem;
   background-color: ${(props) =>
-    props.theme.colors[props.buttonColor || 'primary']};
+    props.theme.button[props.buttonColor || 'primary']};
   font-size: ${(props) => props.fontSize || 1}rem;
   white-space: nowrap;
   user-select: none;
@@ -43,12 +43,12 @@ const StyledButton = styled.button<ButtonProps>`
 
   &:disabled {
     background-color: ${(props) =>
-      props.theme.colors[props.disabledButtonColor || 'primary']};
+      props.theme.button[props.disabledButtonColor || 'disabled']};
     cursor: not-allowed;
   }
 
   &:active {
     background-color: ${(props) =>
-      props.theme.colors[props.activeButtonColor || 'primaryActive']};
+      props.theme.button[props.activeButtonColor || 'active']};
   }
 `;
