@@ -8,3 +8,10 @@ export interface Question {
 }
 
 export type Questions = Question[];
+
+export type QuestionType = 'objective' | 'subjective';
+
+export enum QUESTION_TYPE {
+  OBJECTIVE = 'objective',
+  SUBJECTIVE = 'subjective',
+}
