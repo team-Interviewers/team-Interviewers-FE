@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
-import { Question } from '../types/question';
+import { QUESTION_TYPE, Question, QuestionType } from '../types/question';
 import CheckBox from './CheckBox';
 
 interface AnswerProps {
@@ -14,15 +14,19 @@ interface AnswerProps {
 const Answer = ({ answer, question, handleChange }: AnswerProps) => {
   const questionType = isObjective(question);
 
-  return (
-    <Wrapper>
-      {questionType === 'objective' ? (
+  const answerComponent = (questionType: QuestionType) => {
+    if (questionType === QUESTION_TYPE.OBJECTIVE)
+      return (
         <ObjectiveAnswer question={question} handleChange={handleChange} />
-      ) : (
-        <SubjectiveAnswer answer={answer} handleChange={handleChange} />
-      )}
-    </Wrapper>
-  );
+      );
+
+    if (questionType === QUESTION_TYPE.SUBJECTIVE)
+      return <SubjectiveAnswer answer={answer} handleChange={handleChange} />;
+
+    return null;
+  };
+
+  return <Wrapper>{answerComponent(questionType)}</Wrapper>;
 };
 
 export default Answer;
@@ -98,7 +102,7 @@ const ObjectiveAnswer = ({ question, handleChange }: ObjectiveAnswerProps) => {
   );
 };
 
-const isObjective = (question: Question): 'objective' | 'subjective' => {
+const isObjective = (question: Question): QuestionType => {
   return question.choices.length > 0 ? 'objective' : 'subjective';
 };
 
