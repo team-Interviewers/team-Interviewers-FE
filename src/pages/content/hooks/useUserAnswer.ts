@@ -7,6 +7,7 @@ interface UseUserAnswerReturn {
   handleChange: (
     e: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>
   ) => void;
+  resetAnswer: () => void;
 }
 
 interface UseUserAnswerProps {
@@ -33,10 +34,15 @@ const useUserAnswer = ({
 
   const isCorrect = answer === question?.correct;
 
+  const resetAnswer = () => {
+    setAnswer('');
+  };
+
   return {
     answer,
     isCorrect,
     handleChange,
+    resetAnswer,
   };
 };
 
