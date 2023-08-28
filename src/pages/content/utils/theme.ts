@@ -26,7 +26,7 @@ export const darkTheme = {
     default: '#ffffff',
   },
   background: {
-    default: '#161617',
+    default: '#404040',
   },
   button: {
     primary: '#30B198',
