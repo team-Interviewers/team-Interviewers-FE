@@ -1,15 +1,15 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import { styled } from 'styled-components';
 
-interface IconWrapperProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonContainerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
 }
 
-const IconWrapper = ({ children, ...rest }: IconWrapperProps) => {
+const ButtonContainer = ({ children, ...rest }: ButtonContainerProps) => {
   return <Button {...rest}>{children}</Button>;
 };
 
-export default IconWrapper;
+export default ButtonContainer;
 
 const Button = styled.button`
   display: flex;

@@ -5,7 +5,7 @@ import {
 } from 'react-icons/ai';
 import { RiTimerLine as TimerIcon } from 'react-icons/ri';
 import { styled } from 'styled-components';
-import IconWrapper from './IconWrapper';
+import ButtonContainer from './ButtonContainer';
 
 interface CommonProps {
   children: React.ReactNode;
@@ -36,9 +36,9 @@ const Question = ({ children, formattedTime, closeModal }: QuestionProps) => {
           <TimerIcon color="yellow" size={24} />
           <Time>{formattedTime}</Time>
         </TimerWrapper>
-        <IconWrapper onClick={closeModal}>
+        <ButtonContainer onClick={closeModal}>
           <CloseIcon color="white" size={24} />
-        </IconWrapper>
+        </ButtonContainer>
       </Top>
       <Middle>{otherChildren}</Middle>
       <Bottom>{actions}</Bottom>
