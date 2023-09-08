@@ -1,36 +1,48 @@
-import React from "react";
-import logo from "@assets/img/logo.svg";
-import "@pages/popup/Popup.css";
-import useStorage from "@src/shared/hooks/useStorage";
-import exampleThemeStorage from "@src/shared/storages/exampleThemeStorage";
-import withSuspense from "@src/shared/hoc/withSuspense";
+import React, { useEffect, useState } from 'react';
+import '@pages/popup/Popup.css';
+import withSuspense from '@src/shared/hoc/withSuspense';
 
 const Popup = () => {
-  const theme = useStorage(exampleThemeStorage);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const handleTagToggle = (tag: string) => {
+    setSelectedTags((prevTags) =>
+      prevTags.includes(tag)
+        ? prevTags.filter((t) => t !== tag)
+        : [...prevTags, tag]
+    );
+  };
+
+  useEffect(() => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        message: 'SELECTED_TAGS_UPDATE',
+        tags: selectedTags,
+      });
+    });
+  }, [selectedTags]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className="text-lime-400">
-          Edit <code>src/pages/popup/Popup.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React!
-        </a>
-        <button
-          style={{
-            color: theme === "light" ? "#fff" : "#000",
-          }}
-          onClick={exampleThemeStorage.toggle}
-        >
-          Toggle theme: [{theme}]
-        </button>
+        <div>
+          <div className="tags">
+            {['DB', 'Network', 'Java', 'CS', 'DS', 'OS'].map((tag) => (
+              <button
+                key={tag}
+                onClick={() => handleTagToggle(tag)}
+                className={selectedTags.includes(tag) ? 'active' : ''}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+          <div>
+            {selectedTags.map((v) => (
+              <div>{`${v}!!`}</div>
+            ))}
+          </div>
+        </div>
       </header>
     </div>
   );
