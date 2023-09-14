@@ -6,6 +6,7 @@ interface UseTimerReturn {
   isActive: boolean;
   start: () => void;
   pause: () => void;
+  reset: () => void;
 }
 
 /**
@@ -46,11 +47,17 @@ const useTimer = (initialTime: number): UseTimerReturn => {
 
   const pause = () => setIsActive(false);
 
+  const reset = () => {
+    setTime(initialTime);
+    setIsActive(true);
+  };
+
   return {
     formattedTime,
     isActive,
     start,
     pause,
+    reset,
   };
 };
 
