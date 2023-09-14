@@ -30,7 +30,7 @@ const Question = ({ children, formattedTime, closeModal }: QuestionProps) => {
   });
 
   return (
-    <>
+    <Wrapper>
       <Top>
         <TimerWrapper>
           <TimerIcon color="yellow" size={24} />
@@ -42,14 +42,21 @@ const Question = ({ children, formattedTime, closeModal }: QuestionProps) => {
       </Top>
       <Middle>{otherChildren}</Middle>
       <Bottom>{actions}</Bottom>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+`;
 
 Question.Question = ({ children }: CommonProps) => {
   return (
     <QuestionWrapper>
-      <Title>{children}</Title>
+      <Title>❓ : {children}</Title>
     </QuestionWrapper>
   );
 };
@@ -112,12 +119,9 @@ const LifeText = styled.span`
 `;
 
 const Bottom = styled.div`
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 `;
 
 Question.Submit = ({ children }: CommonProps) => {
@@ -126,7 +130,6 @@ Question.Submit = ({ children }: CommonProps) => {
 
 const SubmitWrapper = styled.div`
   display: flex;
-  padding-right: 40px;
 `;
 
 export default Question;
