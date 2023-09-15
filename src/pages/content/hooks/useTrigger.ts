@@ -22,8 +22,6 @@ const useTrigger = ({ time = 60 * 60 }: TriggerProps) => {
     }
   }, [isActive, isOpen, lifeCount]);
 
-  console.log('lifeCount', lifeCount);
-
   // 시간이 다 되면 모달 열기
   useEffect(() => {
     if (lifeCount === 0) return;
