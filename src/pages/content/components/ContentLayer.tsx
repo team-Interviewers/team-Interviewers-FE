@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import QuestionsData from '../../../../questions/questions.json';
 import useLife from '../hooks/useLife';
 import useTimer from '../hooks/useTimer';
 import useUserAnswer from '../hooks/useUserAnswer';
@@ -11,6 +10,7 @@ import Button from './Button';
 import Question from './Question';
 import useToast from '@root/src/shared/ui/toast/useToast';
 import Description from './Description';
+import { useGETQuestionQuery } from '@root/src/shared/api/question';
 
 interface ContentLayerProps {
   closeModal: () => void;
@@ -18,8 +18,12 @@ interface ContentLayerProps {
 
 const ContentLayer = ({ closeModal }: ContentLayerProps) => {
   const { fireToast } = useToast();
+  const { data: QuestionsData } = useGETQuestionQuery();
+
+  console.log(QuestionsData);
+
   // 타이머
-  const { formattedTime, isActive, start } = useTimer(60 * 5);
+  const { formattedTime, start } = useTimer(60 * 5);
   useEffect(() => {
     start();
   }, []);
@@ -46,12 +50,12 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
 
   useEffect(() => {
     try {
-      setQuestion(getFilteredQuestion(selectedTags, QuestionsData));
+      setQuestion(getFilteredQuestion(selectedTags, QuestionsData ?? []));
       setIsSubmitted(false);
     } catch (error) {
       console.error(error);
     }
-  }, [selectedTags]);
+  }, [selectedTags, QuestionsData]);
 
   // 2. 사용자 정답 작성 및 확인
   const { isCorrect, answer, handleChange, resetAnswer } = useUserAnswer({
