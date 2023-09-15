@@ -20,8 +20,6 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
   const { fireToast } = useToast();
   const { data: QuestionsData } = useGETQuestionQuery();
 
-  console.log(QuestionsData);
-
   // 타이머
   const { formattedTime, start } = useTimer(60 * 5);
   useEffect(() => {
