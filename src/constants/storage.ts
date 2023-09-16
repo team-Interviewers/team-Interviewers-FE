@@ -1,4 +1,5 @@
 import { UserConfig, QuestionTag } from '@src/types';
+import { INTERVAL } from './interval';
 
 export const QUESTION_TAGS = [
   'DB',
@@ -12,7 +13,7 @@ export const QUESTION_TAGS = [
 export const DEFAULT_USER_CONFIG: UserConfig = {
   question: {
     tags: QUESTION_TAGS,
-    interval: 2000,
+    interval: INTERVAL.DEFAULT,
   },
 };
 
