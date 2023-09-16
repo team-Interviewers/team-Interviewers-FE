@@ -9,6 +9,7 @@ import { getFilteredQuestion, getRandomQuestion } from '../utils/question';
 import Answer from './Answer';
 import Button from './Button';
 import Question from './Question';
+import { storageController } from '@root/src/modules/StoreController';
 
 interface ContentLayerProps {
   closeModal: () => void;
@@ -32,12 +33,16 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // 1-1. popup의 option 메시지로 받아와 tag update. 다만, state는 휘발성 메모리이기 때문에 추후 localStorage 써야 할 듯
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    () => storageController.getUserTags() || []
+  );
 
   useEffect(() => {
     const messageListener = (message: any) => {
-      if (message.message === 'SELECTED_TAGS_UPDATE')
+      if (message.message === 'SELECTED_TAGS_UPDATE') {
         setSelectedTags(message.tags);
+        storageController.setUserTags(message.tags);
+      }
     };
 
     chrome.runtime.onMessage.addListener(messageListener);
