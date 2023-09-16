@@ -1,15 +1,24 @@
 import '@pages/popup/Popup.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import { Tags } from '@pages/popup/Tag';
+import styled from 'styled-components';
 
 const Popup = () => {
   return (
     <div className="App">
-      <header className="App-header">
+      <Wrapper>
         <Tags />
-      </header>
+      </Wrapper>
     </div>
   );
 };
 
 export default withSuspense(Popup);
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.5rem;
+  align-items: flex-start;
+  color: white;
+`;

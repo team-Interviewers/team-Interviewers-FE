@@ -1,5 +1,5 @@
 import { LocalStorage } from '@src/modules/LocalStorage';
-import { QuestionTag, UserConfig } from '@src/types';
+import { UserConfig } from '@src/types';
 import { LOCAL_STORAGE, DEFAULT_USER_CONFIG } from '@src/constants';
 
 /**

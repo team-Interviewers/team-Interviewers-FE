@@ -41,7 +41,6 @@ export const Tag = ({ tag }: { tag: string }) => {
 const CheckBoxWrapper = styled.div`
   position: relative;
   display: inline-block;
-  margin: 5px;
 `;
 
 const CheckBoxLabel = styled.label`
