@@ -1,6 +1,6 @@
 import '@pages/popup/Popup.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
-import { Tags } from '@pages/popup/components/Tag';
+import { Interval, Tags } from '@root/src/pages/popup/components';
 import styled from 'styled-components';
 
 const Popup = () => {
@@ -8,6 +8,7 @@ const Popup = () => {
     <div className="App">
       <Wrapper>
         <Tags />
+        <Interval />
       </Wrapper>
     </div>
   );

@@ -12,6 +12,7 @@ export const QUESTION_TAGS = [
 export const DEFAULT_USER_CONFIG: UserConfig = {
   question: {
     tags: QUESTION_TAGS,
+    interval: 2000,
   },
 };
 

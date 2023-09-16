@@ -15,6 +15,7 @@ export class StorageController {
     );
   }
 
+  /* Tags */
   getUserTags() {
     const {
       question: { tags },
@@ -31,6 +32,25 @@ export class StorageController {
     };
 
     this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserconfig);
+  }
+
+  /* Interval */
+  setPortalIntervalTime(newInterval: number) {
+    const userConfig = this.getUserConfig();
+    const newUserconfig = {
+      ...userConfig,
+      question: { ...userConfig.question, interval: newInterval },
+    };
+
+    this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserconfig);
+  }
+
+  getPortalIntervalTime(): number {
+    const {
+      question: { interval },
+    } = this.getUserConfig();
+
+    return interval || DEFAULT_USER_CONFIG.question.interval;
   }
 }
 

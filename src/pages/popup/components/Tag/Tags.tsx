@@ -1,4 +1,4 @@
-import { Tag } from '@root/src/pages/popup/components/Tag';
+import { Tag } from '@root/src/pages/popup/components';
 import styled from 'styled-components';
 import { storageController } from '@root/src/modules/StoreController';
 import { useEffect, useState } from 'react';
