@@ -59,7 +59,7 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
     } catch (error) {
       console.error(error);
     }
-  }, [isSubmitted, selectedTags]);
+  }, [isSubmitted]);
 
   // 2. 사용자 정답 작성 및 확인
   const { isCorrect, answer, handleChange, resetAnswer } = useUserAnswer({
@@ -92,12 +92,6 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
     <>
       {question && (
         <ModalWrapper>
-          <div>
-            !!
-            {selectedTags.map((v) => (
-              <div>{`${v}!!`}</div>
-            ))}
-          </div>
           <Question formattedTime={formattedTime} closeModal={closeModal}>
             <Question.Question>{question.question}</Question.Question>
             <Question.Answer>
