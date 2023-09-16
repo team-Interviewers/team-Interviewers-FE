@@ -4,17 +4,18 @@ import { useModal } from '../../hooks/useModal';
 import { darkTheme } from '../../utils/theme';
 import ContentLayer from '../ContentLayer';
 import { storageController } from '@root/src/modules/StoreController';
+import { INTERVAL } from '@root/src/constants';
 
 export default function Portal() {
   // NOTE : 일단 편의를 위해서 모달이 계속 열려있도록 하였습니다.
   const { isOpen, Modal, openModal, closeModal } = useModal();
 
   const [interval, setIntervalState] = useState(
-    storageController.getPortalIntervalTime() || 6000
+    storageController.getPortalIntervalTime() || INTERVAL.DEFAULT
   );
 
   useEffect(() => {
-    const timer = setInterval(openModal, interval);
+    const timer = setInterval(openModal, interval * 60 * 1000);
 
     return () => clearInterval(timer);
   }, [interval]);

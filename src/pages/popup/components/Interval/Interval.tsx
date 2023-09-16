@@ -1,10 +1,11 @@
+import { INTERVAL } from '@root/src/constants';
 import { storageController } from '@src/modules/StoreController';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 export const Interval = () => {
   const [intervalTime, setIntervalTime] = useState<number>(
-    () => storageController.getPortalIntervalTime() || 6000
+    () => storageController.getPortalIntervalTime() || INTERVAL.DEFAULT
   );
 
   const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +29,9 @@ export const Interval = () => {
       <RangeInput
         id="intervalRange"
         type="range"
-        min="1000"
-        max="10000"
-        step="1000"
+        min="30"
+        max="1440"
+        step="30"
         value={intervalTime}
         onChange={handleRangeChange}
       />
