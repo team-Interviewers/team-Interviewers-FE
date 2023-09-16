@@ -1,31 +1,12 @@
-import { storageController } from '@root/src/modules/StoreController';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-export const Tag = ({ tag }: { tag: string }) => {
-  const [selectedTags, setSelectedTags] = useState<string[]>(
-    () => storageController.getUserTags() || []
-  );
+interface TagProps {
+  tag: string;
+  selectedTags: string[];
+  handleTagToggle: (tag: string) => void;
+}
 
-  const handleTagToggle = (tag: string) => {
-    setSelectedTags((prevTags) =>
-      prevTags.includes(tag)
-        ? prevTags.filter((t) => t !== tag)
-        : [...prevTags, tag]
-    );
-  };
-
-  useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        message: 'SELECTED_TAGS_UPDATE',
-        tags: selectedTags,
-      });
-    });
-
-    storageController.setUserTags(selectedTags);
-  }, [selectedTags]);
-
+export const Tag = ({ tag, selectedTags, handleTagToggle }: TagProps) => {
   return (
     <CheckBoxWrapper key={tag}>
       <CheckBox
