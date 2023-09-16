@@ -7,7 +7,6 @@ import { storageController } from '@root/src/modules/StoreController';
 import { INTERVAL } from '@root/src/constants';
 
 export default function Portal() {
-  // NOTE : 일단 편의를 위해서 모달이 계속 열려있도록 하였습니다.
   const { isOpen, Modal, openModal, closeModal } = useModal();
 
   const [interval, setIntervalState] = useState(
@@ -39,7 +38,6 @@ export default function Portal() {
     <>
       <ThemeProvider theme={darkTheme}>
         <Modal isOpen={isOpen} closeModal={closeModal}>
-          <>{`${interval}!!`}</>
           <ContentLayer closeModal={closeModal} />
         </Modal>
       </ThemeProvider>
