@@ -5,4 +5,5 @@ export interface UserConfig {
 
 export type QuestionConfig = {
   tags: QuestionTag[];
+  interval: number;
 };
