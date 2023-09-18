@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { useModal } from '../../hooks/useModal';
 import { darkTheme } from '../../utils/theme';
 import ContentLayer from '../ContentLayer';
+import ToastList from '@root/src/shared/ui/toast/ToastList';
+import useTrigger from '../../hooks/useTrigger';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { storageController } from '@root/src/modules/StoreController';
 import { INTERVAL } from '@root/src/constants';
 
 export default function Portal() {
-  const { isOpen, Modal, openModal, closeModal } = useModal();
+  const queryClient = new QueryClient();
+  const SETTING_TIME = 3;
+  const { Modal, isOpen, closeModal } = useTrigger({ time: SETTING_TIME });
 
   const [interval, setIntervalState] = useState(
     storageController.getPortalIntervalTime() || INTERVAL.DEFAULT
@@ -33,14 +37,15 @@ export default function Portal() {
       chrome.runtime.onMessage.removeListener(messageListener);
     };
   }, []);
-
+  
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={darkTheme}>
+        <ToastList />
         <Modal isOpen={isOpen} closeModal={closeModal}>
           <ContentLayer closeModal={closeModal} />
         </Modal>
       </ThemeProvider>
-    </>
+    </QueryClientProvider>
   );
 }

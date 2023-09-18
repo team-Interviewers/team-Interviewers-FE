@@ -1,6 +1,8 @@
 export const lightTheme = {
   colors: {
     default: '#161617',
+    white: '#ffffff',
+    black: '#000000',
   },
   background: {
     default: '#ffffff',
@@ -19,11 +21,18 @@ export const lightTheme = {
     grey850: '#303030',
     grey900: '#212121',
   },
+  toast: {
+    success: '#30B198',
+    delete: '#E53E3E',
+    error: '#FFF8B5',
+  },
 } as const;
 
 export const darkTheme = {
   colors: {
     default: '#ffffff',
+    white: '#ffffff',
+    black: '#000000',
   },
   background: {
     default: '#404040',
@@ -42,9 +51,15 @@ export const darkTheme = {
     grey850: '#303030',
     grey900: '#212121',
   },
+  toast: {
+    success: '#30B198',
+    delete: '#E53E3E',
+    error: '#FFF8B5',
+  },
 } as const;
 
 export type ColorType = keyof typeof lightTheme.colors;
 export type BackgroundColorType = keyof typeof lightTheme.background;
 export type ButtonColorType = keyof typeof lightTheme.button;
 export type PaletteColorType = keyof typeof lightTheme.palette;
+export type ToastColorType = keyof typeof lightTheme.toast;
