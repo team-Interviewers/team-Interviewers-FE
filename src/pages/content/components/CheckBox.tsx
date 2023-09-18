@@ -16,12 +16,16 @@ import {
 type CheckBoxProps = {
   onChange: (isChecked: boolean) => void;
   isChecked: boolean;
+  disabled?: boolean;
 } & Omit<ComponentPropsWithoutRef<'input'>, 'type' | 'onChange' | 'checked'>;
 
 export const CheckBox: ForwardRefRenderFunction<
   HTMLInputElement,
   CheckBoxProps
-> = ({ id, onChange, isChecked, children, ...restProps }, ref) => {
+> = (
+  { id, onChange, isChecked, disabled = false, children, ...restProps },
+  ref
+) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
 
   useEffect(() => {
@@ -29,6 +33,7 @@ export const CheckBox: ForwardRefRenderFunction<
   }, [isChecked]);
 
   const _onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    if (disabled) return;
     const { checked } = event.target;
     setChecked(checked);
     onChange?.(checked);

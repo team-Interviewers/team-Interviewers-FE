@@ -1,32 +1,31 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import QuestionsData from '../../../../questions/questions.json';
 import useLife from '../hooks/useLife';
 import useTimer from '../hooks/useTimer';
 import useUserAnswer from '../hooks/useUserAnswer';
 import type { Question as QuestionType } from '../types/question';
-import { getFilteredQuestion, getRandomQuestion } from '../utils/question';
+import { getFilteredQuestion } from '../utils/question';
 import Answer from './Answer';
 import Button from './Button';
 import Question from './Question';
 import { storageController } from '@root/src/modules/StoreController';
+import useToast from '@root/src/shared/ui/toast/useToast';
+import Description from './Description';
+import { useGETQuestionQuery } from '@root/src/shared/api/question';
 
 interface ContentLayerProps {
   closeModal: () => void;
 }
 
 const ContentLayer = ({ closeModal }: ContentLayerProps) => {
+  const { fireToast } = useToast();
+  const { data: QuestionsData } = useGETQuestionQuery();
+
   // 타이머
-  const { formattedTime, isActive, start } = useTimer(60 * 5);
+  const { formattedTime, start } = useTimer(60 * 5);
   useEffect(() => {
     start();
   }, []);
-  useEffect(() => {
-    if (!isActive) {
-      alert('시간이 초과되었습니다!');
-      decrement();
-    }
-  }, [isActive]);
 
   // 1. 문제 랜덤으로 가져오기
   const [question, setQuestion] = useState<QuestionType | null>(null);
@@ -54,12 +53,12 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
 
   useEffect(() => {
     try {
-      setQuestion(getFilteredQuestion(selectedTags, QuestionsData));
+      setQuestion(getFilteredQuestion(selectedTags, QuestionsData ?? []));
       setIsSubmitted(false);
     } catch (error) {
       console.error(error);
     }
-  }, [isSubmitted]);
+  }, [isSubmitted, selectedTags, QuestionsData]);
 
   // 2. 사용자 정답 작성 및 확인
   const { isCorrect, answer, handleChange, resetAnswer } = useUserAnswer({
@@ -67,47 +66,85 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
   });
 
   // 3. 사용자 라이프 감소
-  // TODO : 전역으로 관리가 필요해 보임
   const { lifeCount, decrement } = useLife();
 
   const handleSubmit = () => {
     // 입력값이 없을 경우
     if (!answer) {
-      alert('답을 입력해주세요!');
+      fireToast({ message: '정답을 입력해주세요!', mode: 'ERROR' });
       return;
     }
     // 정답일 경우
     if (isCorrect) {
-      alert('정답입니다!');
-      setIsSubmitted(true);
-      resetAnswer();
+      fireToast({ message: '정답입니다!' });
     }
     // 오답일 경우
     if (!isCorrect) {
-      alert('오답입니다!');
+      fireToast({ message: '오답입니다!', mode: 'DELETE' });
+      if (lifeCount === 1) {
+        fireToast({ message: '라이프가 모두 소진되었습니다!', mode: 'ERROR' });
+      }
       decrement();
     }
+    resetAnswer();
+    setIsSubmitted(true);
   };
+
+  if (!question) return null;
+
   return (
     <>
-      {question && (
+      {!isSubmitted && (
+        <>
+          <ModalWrapper>
+            <div>
+              {selectedTags.map((v) => (
+                <div>{`${v}!!`}</div>
+              ))}
+            </div>
+            <Question formattedTime={formattedTime} closeModal={closeModal}>
+              <Question.Question>{question.question}</Question.Question>
+              <Question.Answer>
+                <Answer
+                  question={question}
+                  answer={answer}
+                  mode="question"
+                  handleChange={handleChange}
+                />
+              </Question.Answer>
+              <Question.Life>{lifeCount}</Question.Life>
+              <Question.Submit>
+                <Button onClick={handleSubmit}>
+                  <ButtonText>제출하기</ButtonText>
+                </Button>
+              </Question.Submit>
+            </Question>
+          </ModalWrapper>
+        </>
+      )}
+      {!!isSubmitted && (
         <ModalWrapper>
-          <Question formattedTime={formattedTime} closeModal={closeModal}>
-            <Question.Question>{question.question}</Question.Question>
-            <Question.Answer>
+          <Description closeModal={closeModal}>
+            <Description.Question>{question.question}</Description.Question>
+            {!!question.explanation && (
+              <Description.Description>
+                {question.explanation}
+              </Description.Description>
+            )}
+            <Description.Answer>
               <Answer
                 question={question}
                 answer={answer}
+                mode="description"
                 handleChange={handleChange}
               />
-            </Question.Answer>
-            <Question.Life>{lifeCount}</Question.Life>
-            <Question.Submit>
-              <Button onClick={handleSubmit}>
-                <ButtonText>제출하기</ButtonText>
+            </Description.Answer>
+            <Description.Close>
+              <Button onClick={closeModal}>
+                <ButtonText>닫기</ButtonText>
               </Button>
-            </Question.Submit>
-          </Question>
+            </Description.Close>
+          </Description>
         </ModalWrapper>
       )}
     </>
@@ -119,8 +156,7 @@ export default ContentLayer;
 const ModalWrapper = styled.div`
   position: relative;
   width: 50vw;
-  min-height: 40vh;
-  max-height: 50vh;
+
   background-color: ${({ theme }) => theme.background.default};
   padding: 20px;
   border-radius: 10px;
