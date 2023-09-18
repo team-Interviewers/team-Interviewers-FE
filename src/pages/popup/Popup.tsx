@@ -18,6 +18,7 @@ export default withSuspense(Popup);
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
   padding: 0 0.5rem;
   align-items: flex-start;
   color: white;
