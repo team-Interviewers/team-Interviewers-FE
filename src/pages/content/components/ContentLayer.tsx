@@ -8,6 +8,7 @@ import { getFilteredQuestion } from '../utils/question';
 import Answer from './Answer';
 import Button from './Button';
 import Question from './Question';
+import { storageController } from '@root/src/modules/StoreController';
 import useToast from '@root/src/shared/ui/toast/useToast';
 import Description from './Description';
 import { useGETQuestionQuery } from '@root/src/shared/api/question';
@@ -31,12 +32,16 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // 1-1. popup의 option 메시지로 받아와 tag update. 다만, state는 휘발성 메모리이기 때문에 추후 localStorage 써야 할 듯
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    () => storageController.getUserTags() || []
+  );
 
   useEffect(() => {
     const messageListener = (message: any) => {
-      if (message.message === 'SELECTED_TAGS_UPDATE')
+      if (message.message === 'SELECTED_TAGS_UPDATE') {
         setSelectedTags(message.tags);
+        storageController.setUserTags(message.tags);
+      }
     };
 
     chrome.runtime.onMessage.addListener(messageListener);
@@ -53,7 +58,7 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
     } catch (error) {
       console.error(error);
     }
-  }, [selectedTags, QuestionsData]);
+  }, [isSubmitted, selectedTags, QuestionsData]);
 
   // 2. 사용자 정답 작성 및 확인
   const { isCorrect, answer, handleChange, resetAnswer } = useUserAnswer({

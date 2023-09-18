@@ -1,3 +1,23 @@
+/* Scroll webkit CSS */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+  transition: 0.2s ease-in-out;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #0c0d1182;
+  border-radius: 3px;
+}
+
 .App {
   position: absolute;
   top: 0px;
