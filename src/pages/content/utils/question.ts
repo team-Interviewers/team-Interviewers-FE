@@ -10,14 +10,14 @@ export const getFilteredQuestion = (
   selectedTags: string[],
   questions: Questions
 ): Question => {
-  const filteredQuestions = questions.filter(
+  const filteredQuestions = questions?.filter(
     (question) =>
       selectedTags.length === 0 ||
       selectedTags.some((tag) => question.tags.includes(tag))
   );
 
-  if (filteredQuestions.length === 0)
-    throw new Error(MESSAGE.ERROR.QUESTION_NOT_FOUND);
+  // if (filteredQuestions?.length === 0)
+  //   throw new Error(MESSAGE.ERROR.QUESTION_NOT_FOUND);
 
   const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
 
