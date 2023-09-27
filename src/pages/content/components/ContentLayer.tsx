@@ -58,7 +58,7 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
     } catch (error) {
       console.error(error);
     }
-  }, [isSubmitted, selectedTags, QuestionsData]);
+  }, [selectedTags, QuestionsData]);
 
   // 2. 사용자 정답 작성 및 확인
   const { isCorrect, answer, handleChange, resetAnswer } = useUserAnswer({
@@ -97,11 +97,7 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
       {!isSubmitted && (
         <>
           <ModalWrapper>
-            <div>
-              {selectedTags.map((v) => (
-                <div>{`${v}!!`}</div>
-              ))}
-            </div>
+            {/* <Tags /> */}
             <Question formattedTime={formattedTime} closeModal={closeModal}>
               <Question.Question>{question.question}</Question.Question>
               <Question.Answer>
@@ -114,7 +110,7 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
               </Question.Answer>
               <Question.Life>{lifeCount}</Question.Life>
               <Question.Submit>
-                <Button onClick={handleSubmit}>
+                <Button height={2.5} onClick={handleSubmit}>
                   <ButtonText>제출하기</ButtonText>
                 </Button>
               </Question.Submit>
