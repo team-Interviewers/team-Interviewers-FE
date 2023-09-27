@@ -15,6 +15,9 @@ export const DEFAULT_USER_CONFIG: UserConfig = {
     tags: QUESTION_TAGS,
     interval: INTERVAL.DEFAULT,
   },
+  trigger: {
+    isOpen: false,
+  },
 };
 
 export const LOCAL_STORAGE = Object.freeze({
