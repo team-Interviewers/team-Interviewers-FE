@@ -87,7 +87,7 @@ const QuestionWrapper = styled.div`
 
 const Title = styled.span`
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
 `;
 

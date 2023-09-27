@@ -89,7 +89,7 @@ const QuestionWrapper = styled.div`
 
 const Title = styled.div`
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
 `;
 
@@ -100,7 +100,7 @@ Question.Answer = ({ children }: CommonProps) => {
 Question.Life = ({ children }: CommonProps) => {
   return (
     <LifeWrapper>
-      <HeartIcon color="red" size={24} />
+      <HeartIcon color="red" size={16} />
       <LifeText>{` : ${children}`}</LifeText>
     </LifeWrapper>
   );
@@ -116,6 +116,7 @@ const LifeWrapper = styled.div`
 const LifeText = styled.span`
   font-size: 14px;
   font-weight: bold;
+  margin-left: 3px;
 `;
 
 const Bottom = styled.div`
