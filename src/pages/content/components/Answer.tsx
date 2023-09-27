@@ -154,4 +154,5 @@ const isObjective = (question: Question): QuestionType => {
 const Choice = styled.span`
   color: white;
   margin-left: 10px;
+  font-size: 14px;
 `;
