@@ -11,7 +11,7 @@ export class StorageController {
 
   getUserConfig(): UserConfig {
     return (
-      this.storage.get(LOCAL_STORAGE.KEY.USER_CONFIG) || DEFAULT_USER_CONFIG
+      this.storage.get(LOCAL_STORAGE.KEY.USER_CONFIG) ?? DEFAULT_USER_CONFIG
     );
   }
 
@@ -26,23 +26,23 @@ export class StorageController {
 
   setUserTags(newTags) {
     const userConfig = this.getUserConfig();
-    const newUserconfig = {
+    const newUserConfig = {
       ...userConfig,
       question: { ...userConfig.question, tags: newTags },
     };
 
-    this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserconfig);
+    this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserConfig);
   }
 
   /* Interval */
   setPortalIntervalTime(newInterval: number) {
     const userConfig = this.getUserConfig();
-    const newUserconfig = {
+    const newUserConfig = {
       ...userConfig,
       question: { ...userConfig.question, interval: newInterval },
     };
 
-    this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserconfig);
+    this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserConfig);
   }
 
   getPortalIntervalTime(): number {
@@ -51,6 +51,29 @@ export class StorageController {
     } = this.getUserConfig();
 
     return interval || DEFAULT_USER_CONFIG.question.interval;
+  }
+
+  /* Trigger */
+  async getTriggerStatus(): Promise<boolean> {
+    const {
+      trigger: { isOpen },
+    } = this.getUserConfig();
+
+    return isOpen;
+  }
+
+  setTriggerStatus(newStatus: boolean) {
+    const userConfig = this.getUserConfig();
+    const newUserConfig = {
+      ...userConfig,
+      trigger: { ...userConfig.trigger, isOpen: newStatus },
+    };
+
+    this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserConfig);
+  }
+
+  resetStorage() {
+    this.storage.clear();
   }
 }
 
