@@ -18,6 +18,9 @@ export const DEFAULT_USER_CONFIG: UserConfig = {
   trigger: {
     isOpen: false,
   },
+  life: {
+    lifeCount: 3,
+  },
 };
 
 export const LOCAL_STORAGE = Object.freeze({
