@@ -52,11 +52,13 @@ export const CheckBox: ForwardRefRenderFunction<
         {...restProps}
         ref={ref}
       />
-      {checked ? (
-        <CheckIcon color="green" width={40} size={30} />
-      ) : (
-        <BoxIcon color="gray" width={40} size={30} />
-      )}
+      <IconWrapper>
+        {checked ? (
+          <CheckIcon color="green" width={40} size={30} />
+        ) : (
+          <BoxIcon color="gray" width={40} size={30} />
+        )}
+      </IconWrapper>
       {children}
     </StyledLabel>
   );
@@ -68,6 +70,15 @@ const StyledLabel = styled.label`
   display: flex;
   align-items: center;
   height: fit-content;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 `;
 
 const StyledInput = styled.input`
