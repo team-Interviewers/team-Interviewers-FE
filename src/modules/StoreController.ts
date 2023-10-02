@@ -1,31 +1,36 @@
 import { LocalStorage } from '@src/modules/LocalStorage';
 import { UserConfig } from '@src/types';
 import { LOCAL_STORAGE, DEFAULT_USER_CONFIG } from '@src/constants';
+import { ChromeStorage } from './ChromeStorage';
 
 /**
  * 휘발성 데이터를 저장하는 Controller.
  * 현재는 LocalStorage의 인스턴스를 사용하며, 추후엔 DB관련된 메서드 추상화.
  */
 export class StorageController {
-  constructor(private storage) {}
+  constructor(private storage: ChromeStorage) {}
 
-  getUserConfig(): UserConfig {
-    return (
-      this.storage.get(LOCAL_STORAGE.KEY.USER_CONFIG) ?? DEFAULT_USER_CONFIG
-    );
+  async getUserConfig(): Promise<UserConfig> {
+    const userConfig = await this.storage.get(LOCAL_STORAGE.KEY.USER_CONFIG);
+
+    if (userConfig === null) {
+      this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, DEFAULT_USER_CONFIG);
+      return DEFAULT_USER_CONFIG;
+    }
+    return this.storage.get(LOCAL_STORAGE.KEY.USER_CONFIG);
   }
 
   /* Tags */
-  getUserTags() {
+  async getUserTags() {
     const {
       question: { tags },
-    } = this.getUserConfig();
+    } = await this.getUserConfig();
 
     return tags;
   }
 
-  setUserTags(newTags) {
-    const userConfig = this.getUserConfig();
+  async setUserTags(newTags) {
+    const userConfig = await this.getUserConfig();
     const newUserConfig = {
       ...userConfig,
       question: { ...userConfig.question, tags: newTags },
@@ -35,8 +40,8 @@ export class StorageController {
   }
 
   /* Interval */
-  setPortalIntervalTime(newInterval: number) {
-    const userConfig = this.getUserConfig();
+  async setPortalIntervalTime(newInterval: number) {
+    const userConfig = await this.getUserConfig();
     const newUserConfig = {
       ...userConfig,
       question: { ...userConfig.question, interval: newInterval },
@@ -45,10 +50,10 @@ export class StorageController {
     this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserConfig);
   }
 
-  getPortalIntervalTime(): number {
+  async getPortalIntervalTime(): Promise<number> {
     const {
       question: { interval },
-    } = this.getUserConfig();
+    } = await this.getUserConfig();
 
     return interval || DEFAULT_USER_CONFIG.question.interval;
   }
@@ -57,13 +62,13 @@ export class StorageController {
   async getTriggerStatus(): Promise<boolean> {
     const {
       trigger: { isOpen },
-    } = this.getUserConfig();
+    } = await this.getUserConfig();
 
     return isOpen;
   }
 
-  setTriggerStatus(newStatus: boolean) {
-    const userConfig = this.getUserConfig();
+  async setTriggerStatus(newStatus: boolean) {
+    const userConfig = await this.getUserConfig();
     const newUserConfig = {
       ...userConfig,
       trigger: { ...userConfig.trigger, isOpen: newStatus },
@@ -75,7 +80,27 @@ export class StorageController {
   resetStorage() {
     this.storage.clear();
   }
+
+  /* Life */
+  async getLifeCount(): Promise<number> {
+    const {
+      life: { lifeCount },
+    } = await this.getUserConfig();
+
+    return lifeCount;
+  }
+
+  async setLifeCount(newLifeCount: number) {
+    const userConfig = await this.getUserConfig();
+    const newUserConfig = {
+      ...userConfig,
+      life: { ...userConfig.life, lifeCount: newLifeCount },
+    };
+
+    this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserConfig);
+  }
 }
 
-const storageInstance = new LocalStorage();
+const storageInstance = new ChromeStorage();
+
 export const storageController = new StorageController(storageInstance);
