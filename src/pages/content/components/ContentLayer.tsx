@@ -94,6 +94,7 @@ const ContentLayer = ({
   useEffect(() => {
     if (isActive === false) {
       fireToast({ message: '시간이 초과되었습니다!', mode: 'ERROR' });
+      decreaseLifeCount();
       resetAnswer();
       setIsSubmitted(true);
     }
