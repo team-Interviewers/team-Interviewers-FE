@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { formatTime } from '../utils/time';
 
 interface UseTimerReturn {
+  isStop: boolean;
   formattedTime: string;
   isActive: boolean;
   start: () => void;
@@ -20,6 +21,7 @@ const useTimer = (initialTime: number): UseTimerReturn => {
   const [time, setTime] = useState(initialTime);
   const [formattedTime, setFormattedTime] = useState(formatTime(initialTime));
   const [isActive, setIsActive] = useState<boolean>(true);
+  const [isStop, setIsStop] = useState<boolean>(false);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
@@ -28,31 +30,40 @@ const useTimer = (initialTime: number): UseTimerReturn => {
       intervalId = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
       }, 1000);
+    } else if (isStop) {
+      clearInterval(intervalId);
     } else if (!isActive && time !== 0) {
       clearInterval(intervalId);
-    } else if (time === 0) {
+    } else if (time === 0 && !isStop) {
       setIsActive(false);
     }
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [isActive, time]);
+  }, [isActive, time, isStop]);
 
   useEffect(() => {
     setFormattedTime(formatTime(time));
   }, [time]);
 
-  const start = () => setIsActive(true);
+  const start = () => {
+    setIsActive(true);
+  };
 
-  const pause = () => setIsActive(false);
+  const pause = () => {
+    setIsActive(false);
+    setIsStop(true);
+  };
 
   const reset = () => {
     setTime(initialTime);
     setIsActive(true);
+    setIsStop(false);
   };
 
   return {
+    isStop,
     formattedTime,
     isActive,
     start,

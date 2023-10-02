@@ -23,13 +23,13 @@ export const Interval = () => {
 
   return (
     <Wrapper>
-      <Title htmlFor="intervalRange">Portal Interval (m): {intervalTime}</Title>
+      <Title htmlFor="intervalRange">Portal Interval (s): {intervalTime}</Title>
       <RangeInput
         id="intervalRange"
         type="range"
-        min="30"
-        max="1440"
-        step="30"
+        min="1"
+        max="60"
+        step="1"
         value={intervalTime}
         onChange={handleRangeChange}
       />

@@ -53,9 +53,9 @@ export const CheckBox: ForwardRefRenderFunction<
         ref={ref}
       />
       {checked ? (
-        <CheckIcon color="green" size={24} />
+        <CheckIcon color="green" width={40} size={30} />
       ) : (
-        <BoxIcon color="gray" size={24} />
+        <BoxIcon color="gray" width={40} size={30} />
       )}
       {children}
     </StyledLabel>
@@ -72,4 +72,5 @@ const StyledLabel = styled.label`
 
 const StyledInput = styled.input`
   display: none;
+  align-items: center;
 `;
