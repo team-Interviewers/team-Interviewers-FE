@@ -41,5 +41,5 @@ const Layout = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  z-index: 30;
+  z-index: 99999999999;
 `;

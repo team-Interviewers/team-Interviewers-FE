@@ -39,7 +39,7 @@ export const darkTheme = {
   },
   button: {
     primary: '#30B198',
-    active: '#4DA48C',
+    active: '#757575',
     disabled: '#BDBDBD',
   },
   palette: {
