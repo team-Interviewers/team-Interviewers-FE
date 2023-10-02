@@ -11,12 +11,21 @@ import { INTERVAL } from '@root/src/constants';
 export default function Portal() {
   const queryClient = new QueryClient();
 
-  const [intervalTime, setIntervalState] = useState<number>(
-    () => storageController.getPortalIntervalTime() || INTERVAL.DEFAULT
-  );
-  const { Modal, isOpen, closeModal } = useTrigger({
-    time: intervalTime,
-  });
+  const [intervalTime, setIntervalState] = useState<number>(INTERVAL.DEFAULT);
+
+  useEffect(() => {
+    (async () => {
+      const intervalTime = await storageController.getPortalIntervalTime();
+      if (intervalTime) {
+        setIntervalState(intervalTime || INTERVAL.DEFAULT);
+      }
+    })();
+  }, []);
+
+  const { Modal, isOpen, lifeCount, closeModal, decreaseLifeCount } =
+    useTrigger({
+      time: intervalTime,
+    });
 
   useEffect(() => {
     const messageListener = (message: any) => {
@@ -36,7 +45,11 @@ export default function Portal() {
       <ThemeProvider theme={darkTheme}>
         <ToastList />
         <Modal isOpen={isOpen} closeModal={closeModal}>
-          <ContentLayer closeModal={closeModal} />
+          <ContentLayer
+            lifeCount={lifeCount}
+            decreaseLifeCount={decreaseLifeCount}
+            closeModal={closeModal}
+          />
         </Modal>
       </ThemeProvider>
     </QueryClientProvider>
