@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import useLife from '../hooks/useLife';
 import useTimer from '../hooks/useTimer';
 import useUserAnswer from '../hooks/useUserAnswer';
 import type { Question as QuestionType } from '../types/question';
@@ -14,15 +13,21 @@ import Description from './Description';
 import { useGETQuestionQuery } from '@root/src/shared/api/question';
 
 interface ContentLayerProps {
+  lifeCount: number;
+  decreaseLifeCount: () => void;
   closeModal: () => void;
 }
 
-const ContentLayer = ({ closeModal }: ContentLayerProps) => {
+const ContentLayer = ({
+  lifeCount,
+  decreaseLifeCount,
+  closeModal,
+}: ContentLayerProps) => {
   const { fireToast } = useToast();
   const { data: QuestionsData } = useGETQuestionQuery();
 
   // 타이머
-  const { formattedTime, start } = useTimer(60 * 5);
+  const { formattedTime, start, isActive } = useTimer(60 * 5);
   useEffect(() => {
     start();
   }, []);
@@ -32,9 +37,7 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // 1-1. popup의 option 메시지로 받아와 tag update. 다만, state는 휘발성 메모리이기 때문에 추후 localStorage 써야 할 듯
-  const [selectedTags, setSelectedTags] = useState<string[]>(
-    () => storageController.getUserTags() || []
-  );
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   useEffect(() => {
     const messageListener = (message: any) => {
@@ -66,8 +69,6 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
   });
 
   // 3. 사용자 라이프 감소
-  const { lifeCount, decrement } = useLife();
-
   const handleSubmit = () => {
     // 입력값이 없을 경우
     if (!answer) {
@@ -84,11 +85,19 @@ const ContentLayer = ({ closeModal }: ContentLayerProps) => {
       if (lifeCount === 1) {
         fireToast({ message: '라이프가 모두 소진되었습니다!', mode: 'ERROR' });
       }
-      decrement();
+      decreaseLifeCount();
     }
     resetAnswer();
     setIsSubmitted(true);
   };
+
+  useEffect(() => {
+    if (isActive === false) {
+      fireToast({ message: '시간이 초과되었습니다!', mode: 'ERROR' });
+      resetAnswer();
+      setIsSubmitted(true);
+    }
+  }, [isActive]);
 
   if (!question) return null;
 
@@ -152,6 +161,7 @@ export default ContentLayer;
 const ModalWrapper = styled.div`
   position: relative;
   width: 50vw;
+  max-height: 70vh;
 
   background-color: ${({ theme }) => theme.background.default};
   padding: 20px;
