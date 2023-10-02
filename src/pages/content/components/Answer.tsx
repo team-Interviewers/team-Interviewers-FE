@@ -48,7 +48,7 @@ export default Answer;
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 interface SubjectiveAnswerProps {
@@ -91,15 +91,16 @@ const Input = styled.textarea`
   resize: none;
   color: white;
   box-sizing: border-box;
+  font-size: 0.8rem;
   &::placeholder {
     color: ${(props) => props.theme.palette.grey400};
   }
+  margin-top: 10px;
 `;
 
 const AnswerText = styled.span`
   color: white;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 0.9rem;
 `;
 
 interface ObjectiveAnswerProps {
@@ -154,5 +155,8 @@ const isObjective = (question: Question): QuestionType => {
 const Choice = styled.span`
   color: white;
   margin-left: 10px;
-  font-size: 14px;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+  width: 100%;
+  box-sizing: border-box;
 `;
