@@ -4,7 +4,8 @@ export type ToastMessage =
   | '정답입니다!'
   | '라이프가 모두 소진되었습니다!'
   | '오답입니다!'
-  | '정답을 입력해주세요!';
+  | '정답을 입력해주세요!'
+  | '시간이 초과되었습니다!';
 
 export type ToastMode = 'SUCCESS' | 'DELETE' | 'ERROR';
 
