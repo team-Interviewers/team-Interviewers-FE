@@ -2,6 +2,7 @@ export type QuestionTag = 'DB' | 'Network' | 'Java' | 'CS' | 'DS' | 'OS';
 export interface UserConfig {
   question: QuestionConfig;
   trigger: TriggerConfig;
+  life: LifeConfig;
 }
 
 export type QuestionConfig = {
@@ -11,4 +12,8 @@ export type QuestionConfig = {
 
 export type TriggerConfig = {
   isOpen: boolean;
+};
+
+export type LifeConfig = {
+  lifeCount: number;
 };

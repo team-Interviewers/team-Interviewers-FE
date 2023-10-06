@@ -1,12 +1,17 @@
 import { INTERVAL } from '@root/src/constants';
 import { storageController } from '@src/modules/StoreController';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 export const Interval = () => {
-  const [intervalTime, setIntervalTime] = useState<number>(
-    () => storageController.getPortalIntervalTime() || INTERVAL.DEFAULT
-  );
+  const [intervalTime, setIntervalTime] = useState<number>(INTERVAL.DEFAULT);
+
+  useEffect(() => {
+    (async () => {
+      const intervalTime = await storageController.getPortalIntervalTime();
+      setIntervalTime(intervalTime || INTERVAL.DEFAULT);
+    })();
+  }, []);
 
   const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);

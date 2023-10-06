@@ -89,8 +89,9 @@ const QuestionWrapper = styled.div`
 
 const Title = styled.div`
   color: white;
-  font-size: 15px;
+  font-size: 0.9rem;
   font-weight: bold;
+  line-height: 1.5rem;
 `;
 
 Question.Answer = ({ children }: CommonProps) => {

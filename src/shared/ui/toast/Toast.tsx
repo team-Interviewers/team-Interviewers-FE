@@ -28,7 +28,7 @@ const modeColor: Record<ToastMode, ToastColorType> = {
 } as const;
 
 const modeTextColor: Record<ToastMode, ColorType> = {
-  SUCCESS: 'default',
+  SUCCESS: 'white',
   DELETE: 'white',
   ERROR: 'black',
 } as const;
@@ -71,6 +71,7 @@ const StyleToast = styled.div<StyleToastProps>`
   animation: ${floating} ${({ duration }) => duration}ms ease-in-out;
   border-radius: ${getRem(8)};
   background-color: ${(props) => props.theme.toast[props.backgroundColor]};
+  z-index: 99999999999;
 `;
 
 const StyleToastMessage = styled.div<{ mode: ToastMode }>`

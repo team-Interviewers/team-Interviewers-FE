@@ -87,8 +87,9 @@ const QuestionWrapper = styled.div`
 
 const Title = styled.span`
   color: white;
-  font-size: 15px;
+  font-size: 0.9rem;
   font-weight: bold;
+  line-height: 1.5rem;
 `;
 
 Description.Description = ({ children }: CommonProps) => {
@@ -120,7 +121,7 @@ Description.Answer = ({ children }: CommonProps) => {
 
 const AnswerWrapper = styled.div`
   display: flex;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 Description.Close = ({ children }: CommonProps) => {

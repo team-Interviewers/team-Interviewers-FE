@@ -4,9 +4,14 @@ import { storageController } from '@root/src/modules/StoreController';
 import { useEffect, useState } from 'react';
 
 export const Tags = () => {
-  const [selectedTags, setSelectedTags] = useState<string[]>(
-    () => storageController.getUserTags() || []
-  );
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const tags = await storageController.getUserTags();
+      setSelectedTags(tags);
+    })();
+  }, []);
 
   const handleTagToggle = (tag: string) => {
     setSelectedTags((prevTags) => {

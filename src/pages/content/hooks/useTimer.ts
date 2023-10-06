@@ -24,6 +24,13 @@ const useTimer = (initialTime: number): UseTimerReturn => {
   const [isStop, setIsStop] = useState<boolean>(false);
 
   useEffect(() => {
+    if (initialTime) {
+      setTime(initialTime);
+      reset();
+    }
+  }, [initialTime]);
+
+  useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
     if (isActive && time > 0) {
