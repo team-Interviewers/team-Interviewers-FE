@@ -42,7 +42,7 @@ const CheckBoxLabel = styled.label`
     height: 16px;
     border: 2px solid #aaa;
     border-radius: 4px;
-    background-color: #fff;
+    background: transparent;
   }
 `;
 
@@ -54,7 +54,6 @@ const CheckBox = styled.input.attrs({ type: 'checkbox' })`
   cursor: pointer;
 
   &:checked + ${CheckBoxLabel}:before {
-    background-color: #2196f3;
-    border-color: #2196f3;
+    background-color: #7d8aff;
   }
 `;

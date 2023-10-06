@@ -28,7 +28,7 @@ export const Interval = () => {
 
   return (
     <Wrapper>
-      <Title htmlFor="intervalRange">Portal Interval (s): {intervalTime}</Title>
+      <Title htmlFor="intervalRange">Portal Interval (m): {intervalTime}</Title>
       <RangeInput
         id="intervalRange"
         type="range"
@@ -46,12 +46,37 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1rem 1rem 1rem;
   gap: 0.25rem;
+  padding-top: 0.5rem;
 `;
 
 const Title = styled.label``;
 
 const RangeInput = styled.input`
-  width: 100%;
+  overflow: hidden;
+  height: 0.5rem;
+  -webkit-appearance: none;
+  background: rgba(111, 111, 111, 0.6);
+
+  :focus {
+    outline: none;
+  }
+
+  ::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+    background: #30b198;
+  }
+
+  ::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 100%;
+    background: whitesmoke;
+    border: none;
+    cursor: pointer;
+    box-shadow: -100vw 0 0 100vw #30b198;
+  }
 `;
