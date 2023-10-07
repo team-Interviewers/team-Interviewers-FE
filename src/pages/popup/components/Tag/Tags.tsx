@@ -19,6 +19,8 @@ export const Tags = () => {
         ? prevTags.filter((t) => t !== tag)
         : [...prevTags, tag];
 
+      if (newTag.length === 0) return prevTags;
+
       storageController.setUserTags(newTag);
       return newTag;
     });
