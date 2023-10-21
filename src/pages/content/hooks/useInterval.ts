@@ -11,8 +11,8 @@ const useInterval = () => {
   useEffect(() => {
     (async () => {
       const intervalTime =
-        (await storageController.getPortalIntervalTime()) ?? INTERVAL.DEFAULT;
-      intervalTime && setIntervalState(intervalTime);
+        (await storageController.getPortalIntervalTime()) || INTERVAL.DEFAULT;
+      setIntervalState(intervalTime);
     })();
   }, []);
 
