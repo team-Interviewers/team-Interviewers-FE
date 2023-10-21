@@ -2,6 +2,7 @@ import { Tag } from '@root/src/pages/popup/components';
 import styled from 'styled-components';
 import { storageController } from '@root/src/modules/StoreController';
 import { useEffect, useState } from 'react';
+import { QUESTION_TAGS } from '@root/src/constants';
 
 export const Tags = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -18,7 +19,6 @@ export const Tags = () => {
       const newTag = prevTags.includes(tag)
         ? prevTags.filter((t) => t !== tag)
         : [...prevTags, tag];
-
       if (newTag.length === 0) return prevTags;
 
       storageController.setUserTags(newTag);
@@ -39,7 +39,7 @@ export const Tags = () => {
     <Wrapper>
       <Title>Tags</Title>
       <TagList>
-        {['DB', 'Network', 'Java', 'CS', 'DS', 'OS'].map((tag) => (
+        {QUESTION_TAGS.map((tag) => (
           <Tag
             tag={tag}
             selectedTags={selectedTags}
