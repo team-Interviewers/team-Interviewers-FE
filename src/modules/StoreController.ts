@@ -1,4 +1,3 @@
-import { LocalStorage } from '@src/modules/LocalStorage';
 import { UserConfig } from '@src/types';
 import { LOCAL_STORAGE, DEFAULT_USER_CONFIG } from '@src/constants';
 import { ChromeStorage } from './ChromeStorage';
@@ -11,13 +10,15 @@ export class StorageController {
   constructor(private storage: ChromeStorage) {}
 
   async getUserConfig(): Promise<UserConfig> {
-    const userConfig = await this.storage.get(LOCAL_STORAGE.KEY.USER_CONFIG);
+    const userConfig = (await this.storage.get(
+      LOCAL_STORAGE.KEY.USER_CONFIG
+    )) as UserConfig;
 
     if (userConfig === null) {
       this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, DEFAULT_USER_CONFIG);
       return DEFAULT_USER_CONFIG;
     }
-    return this.storage.get(LOCAL_STORAGE.KEY.USER_CONFIG);
+    return userConfig;
   }
 
   /* Tags */
@@ -55,7 +56,7 @@ export class StorageController {
       question: { interval },
     } = await this.getUserConfig();
 
-    return interval || DEFAULT_USER_CONFIG.question.interval;
+    return interval;
   }
 
   /* Trigger */
@@ -97,6 +98,21 @@ export class StorageController {
       life: { ...userConfig.life, lifeCount: newLifeCount },
     };
 
+    this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserConfig);
+  }
+
+  /** Time */
+  async getTime(): Promise<Date> {
+    const { time } = await this.getUserConfig();
+    return time;
+  }
+
+  async setTime(newStartTime: Date) {
+    const userConfig = await this.getUserConfig();
+    const newUserConfig = {
+      ...userConfig,
+      time: newStartTime,
+    };
     this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserConfig);
   }
 }

@@ -57,7 +57,13 @@ const useTrigger = ({ time }: TriggerProps) => {
   // 1. 라이프 카운트 초기화
   useEffect(() => {
     (async () => {
-      const lifeCount = await storageController.getLifeCount();
+      const time = await storageController.getTime();
+      let lifeCount = await storageController.getLifeCount();
+      // NOTE : 어제의 시간이면 라이프 카운트 초기화
+      if (time && new Date(time).getDate() !== new Date().getDate()) {
+        storageController.setLifeCount(3);
+        lifeCount = 3;
+      }
       dispatch({ type: 'SET_LIFE_COUNT', action: lifeCount });
     })();
   }, []);
@@ -94,6 +100,7 @@ const useTrigger = ({ time }: TriggerProps) => {
     await storageController.setTriggerStatus(false);
     reset();
     _closeModal();
+    await storageController.setTime(new Date());
   };
 
   // 4. 라이프 차감
