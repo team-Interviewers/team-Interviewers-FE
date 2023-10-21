@@ -8,6 +8,9 @@ interface UseUserAnswerReturn {
     e: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>
   ) => void;
   resetAnswer: () => void;
+  isSubmitted: boolean;
+  setSubmitted: () => void;
+  resetSubmitted: () => void;
 }
 
 interface UseUserAnswerProps {
@@ -38,11 +41,24 @@ const useUserAnswer = ({
     setAnswer('');
   };
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const setSubmitted = () => {
+    setIsSubmitted(true);
+  };
+
+  const resetSubmitted = () => {
+    setIsSubmitted(false);
+  };
+
   return {
     answer,
     isCorrect,
+    isSubmitted,
     handleChange,
     resetAnswer,
+    setSubmitted,
+    resetSubmitted,
   };
 };
 
