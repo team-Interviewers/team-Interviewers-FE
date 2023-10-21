@@ -18,6 +18,7 @@ export class StorageController {
       this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, DEFAULT_USER_CONFIG);
       return DEFAULT_USER_CONFIG;
     }
+
     return userConfig;
   }
 
@@ -104,6 +105,7 @@ export class StorageController {
   /** Time */
   async getTime(): Promise<Date> {
     const { time } = await this.getUserConfig();
+
     return time;
   }
 
@@ -113,6 +115,7 @@ export class StorageController {
       ...userConfig,
       time: newStartTime,
     };
+
     this.storage.set(LOCAL_STORAGE.KEY.USER_CONFIG, newUserConfig);
   }
 }

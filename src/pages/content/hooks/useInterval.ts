@@ -23,7 +23,9 @@ const useInterval = () => {
         storageController.setPortalIntervalTime(message.interval);
       }
     };
+
     chrome.runtime.onMessage.addListener(messageListener);
+
     return () => {
       chrome.runtime.onMessage.removeListener(messageListener);
     };
