@@ -3,6 +3,7 @@ export interface UserConfig {
   question: QuestionConfig;
   trigger: TriggerConfig;
   life: LifeConfig;
+  time: Date;
 }
 
 export type QuestionConfig = {

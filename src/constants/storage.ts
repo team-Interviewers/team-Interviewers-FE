@@ -21,6 +21,7 @@ export const DEFAULT_USER_CONFIG: UserConfig = {
   life: {
     lifeCount: 3,
   },
+  time: new Date(),
 };
 
 export const LOCAL_STORAGE = Object.freeze({
