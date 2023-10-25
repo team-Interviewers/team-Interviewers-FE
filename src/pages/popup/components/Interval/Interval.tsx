@@ -28,7 +28,7 @@ export const Interval = () => {
 
   return (
     <Wrapper>
-      <Title htmlFor="intervalRange">Portal Interval (m): {intervalTime}</Title>
+      <Title htmlFor="intervalRange">노출 주기 (분): {intervalTime}</Title>
       <RangeInput
         id="intervalRange"
         type="range"
