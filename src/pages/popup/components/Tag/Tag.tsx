@@ -6,6 +6,15 @@ interface TagProps {
   handleTagToggle: (tag: string) => void;
 }
 
+const TAG_MAP = Object.freeze({
+  DB: '데이터베이스',
+  Network: '네트워크',
+  Java: 'Java',
+  CS: '컴퓨터구조',
+  DS: '자료구조',
+  OS: '운영체제',
+});
+
 export const Tag = ({ tag, selectedTags, handleTagToggle }: TagProps) => {
   return (
     <CheckBoxWrapper key={tag}>
@@ -14,7 +23,7 @@ export const Tag = ({ tag, selectedTags, handleTagToggle }: TagProps) => {
         checked={selectedTags.includes(tag)}
         onChange={() => handleTagToggle(tag)}
       />
-      <CheckBoxLabel htmlFor={`checkbox_${tag}`}>{tag}</CheckBoxLabel>
+      <CheckBoxLabel htmlFor={`checkbox_${tag}`}>{TAG_MAP[tag]}</CheckBoxLabel>
     </CheckBoxWrapper>
   );
 };
